@@ -1,0 +1,132 @@
+﻿CREATE DATABASE QL_SINHVIEN
+
+
+use QL_SINHVIEN;
+
+CREATE TABLE KHOA
+(
+	MAKHOA CHAR(10),
+	TENKHOA VARCHAR(50),
+	CONSTRAINT pk_makhoa PRIMARY KEY (MAKHOA)
+)
+
+CREATE TABLE LOP
+(
+	MALOP CHAR(10) PRIMARY KEY NOT NULL,
+	TENLOP NVARCHAR(100),
+	MAKHOA CHAR(10),
+	CONSTRAINT FK_LOP_KHOA FOREIGN KEY (MAKHOA) REFERENCES Khoa(MAKHOA)
+)
+CREATE TABLE SINHVIEN(
+	MASV CHAR(10) PRIMARY KEY NOT NULL,
+	HOTEN NVARCHAR(100),
+	NGAYSINH DATE,
+	MALOP CHAR(10),
+	CONSTRAINT FK_SINHVIEN_KHOA FOREIGN KEY (MALOP) REFERENCES LOP(MALOP)
+)
+CREATE TABLE MONHOC(
+	MAMH CHAR(10) PRIMARY KEY NOT NULL,
+	TENMH NVARCHAR(100)
+)
+CREATE TABLE DIEM(
+	MASV CHAR(10) NOT NULL,
+	MAMH CHAR(10),
+	DIEM FLOAT,
+	CONSTRAINT PK_DIEM PRIMARY KEY(MASV,MAMH),
+	CONSTRAINT FK_DIEM_SINHVIEN FOREIGN KEY (MASV) REFERENCES SINHVIEN(MASV),
+	CONSTRAINT FK_DIEM_MONHOC FOREIGN KEY (MAMH) REFERENCES MonHoc(MAMH)
+)
+INSERT INTO Khoa
+VALUES
+	('TH',N'Tin học'),
+	('VL',N'Vật lý'),
+	('DT',N'Điện tử'),
+	('TP',N'Thực phẩm'),
+	('HH',N'Hóa học'),
+	('SH',N'Sinh học')
+INSERT INTO LOP
+VALUES
+	('L001',N'24THTH1','TH'),
+	('L002',N'24THTH2','TH'),
+	('L003',N'05CDTH','TH'),
+	('L004',N'06CDTH1','TH'),
+	('L005',N'06CDTH2','TH'),
+	('L006',N'24THTP1','TP'),
+	('L007',N'24THTP2','TP'),
+	('L008',N'24THTP3','TP'),
+	('L009',N'06CDDT','DT'),
+	('L010',N'05CDVL','VL'),
+	('L011',N'24THHH','HH'),
+	('L012',N'06CDSH','SH')
+
+INSERT INTO SINHVIEN
+VALUES
+	('SV01',N'Nguyễn Thị Lan','03/12/1978','L001'),
+	('SV02',N'Trần Thanh Tùng','04/02/1980','L001'),
+	('SV03',N'Trương Thị Huệ','10/11/1984','L001'),
+	('SV04',N'Lê Văn Khánh','07/04/1985','L002'),
+	('SV05',N'Ngô Đình Việt','08/14/1986','L002'),
+	('SV06',N'Trần Thị Liễu','07/15/1985','L003'),
+	('SV07',N'Trần Thanh Nam','04/02/1988','L004'),
+	('SV08',N'Phạm Hoài Phong','05/19/1979','L004'),
+	('SV09',N'Trần Thị Tố Anh','07/08/1981','L004'),
+	('SV10',N'Đỗ Thị Hạnh','03/15/1982','L004'),
+	('SV11',N'Hà Thanh Tùng','04/26/1983','L005'),
+	('SV12',N'Trần Quốc Tuấn','07/15/1982','L006'),
+	('SV13',N'Nguyễn Minh Trí','10/10/1981','L007'),
+	('SV14',N'Trần Thanh Phước','12/17/1984','L008'),
+	('SV15',N'Nguyễn Phước Sang','02/18/1986','L008'),
+	('SV16',N'Lê Thị Ánh','05/15/1987','L009'),
+	('SV17',N'Trương Thị Nhàn','03/12/1981','L010'),
+	('SV18',N'Nguyễn Kim Phụng','06/14/1983','L011'),
+	('SV19',N'Trần Thị Thắm','02/11/1985','L012'),
+	('SV20',N'Nguyễn Thu Trang','05/17/1988','L005')
+
+INSERT INTO MOMHOC
+VALUES
+	('MH001',N'Toán cao cấp A1'),
+	('MH002',N'Lịch sử đảng'),
+	('MH003',N'Chính trị'),
+	('MH004',N'Cơ sở dữ liệu'),
+	('MH005',N'SQL SERVER'),
+	('MH006',N'Lập trình C'),
+	('MH007',N'Xử lý ảnh'),
+	('MH008',N'Tin học cơ bản'),
+	('MH009',N'Mạng máy tính'),
+	('MH010',N'Toán rời rạc'),
+	('MH011',N'Lập trình quản lý'),
+	('MH012',N'ASP.Net')
+
+INSERT INTO DIEM
+VALUES
+	('SV01','MH001',8),
+	('SV01','MH002',4),
+	('SV01','MH003',6),
+	('SV02','MH001',7),
+	('SV04','MH001',5),
+	('SV04','MH002',7),
+	('SV05','MH003',9),
+	('SV06','MH008',10),
+	('SV07','MH005',6),
+	('SV07','MH007',9),
+	('SV08','MH004',7),
+	('SV09','MH010',3),
+	('SV10','MH001',8),
+	('SV10','MH006',6),
+	('SV11','MH004',5),
+	('SV12','MH004',8),
+	('SV13','MH007',8),
+	('SV14','MH005',4),
+	('SV14','MH006',7),
+	('SV15','MH009',7),
+	('SV16','MH002',10),
+	('SV17','MH006',8),
+	('SV18','MH007',9),
+	('SV19','MH006',7),
+	('SV20','MH001',5),
+	('SV20','MH002',7),
+	('SV20','MH004',6),
+	('SV20','MH005',9),
+	('SV20','MH009',10)
+select *from KHOA
+delete KHOA WHERE MAKHOA = 'cntp';
